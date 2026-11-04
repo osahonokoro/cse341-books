@@ -1,12 +1,19 @@
-import app from './app.js';
+require('node:dns').setServers(['8.8.8.8', '8.8.4.4']);
+require('dotenv').config();
+const app = require('./app');
+const { connectToDb } = require('./src/db/connect');
 
-const PORT = process.env.PORT;
+const port = process.env.PORT || 3000;
 
+const startServer = async () => {
+  try {
+    await connectToDb();
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+  }
+};
 
-if (!PORT) {
-  throw new Error('PORT is not defined. Check your .env file.');
-}
-
-app.listen(PORT, () => {
-  console.log(`Server running at http://127.0.0.1:${PORT}`);
-});
+startServer();
