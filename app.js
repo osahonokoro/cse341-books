@@ -15,9 +15,14 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'API for managing books and authors',
     },
-    servers: [
+        servers: [
+      {
+        url: 'https://cse341-books-ewwm.onrender.com',
+        description: 'Render (production)',
+      },
       {
         url: 'http://localhost:3000',
+        description: 'Local development',
       },
     ],
   },
